@@ -7,10 +7,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'mt':['Montserrat', 'sans-serif'],
-        'mt-demi': ['MontserratDemi', 'sans-serif'],
-        'mt-bold': ['MontserratBold', 'sans-serif'],
-        'mt-extra-bold': ['MontserratExtraBold', 'sans-serif']
+        'c':['Cormorant', 'sans-serif'],
+        'c-light':['CormorantLight','sans-serif'],
+        'c-demi': ['CormorantDemi', 'sans-serif'],
+        'c-bold': ['CormorantBold', 'sans-serif'],
       },
       gridTemplateColumns:{
         'rectangle':'200px 300px 700px 150px',

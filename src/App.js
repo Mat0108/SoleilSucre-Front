@@ -1,3 +1,4 @@
+
 import "./App.css";
 
 import React, { useMemo, useState, useRef, useEffect, useContext } from "react";
@@ -11,17 +12,53 @@ import Modal from "react-modal";
 
 import { useCookies } from "react-cookie";
 import { LanguageContext, LanguageProvider } from "./languages/index";
+import Navbar from './components/navbar'
+import Home from "./pages/Home";
 
-
+import { initializeApp } from 'firebase/app';
+import Register from "./pages/Register";
+import { getAnalytics } from 'firebase/analytics';
+import { getAuth } from "firebase/auth";
+import env from "react-dotenv";
+import Login from "./pages/Login";
+import Forgotpassword from './pages/Forgotpassword'
 function App() {
   const { dictionnaire } = useContext(LanguageContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [divModal, setDivModal] = useState(<></>);
+  const [connected, setConnected] = useState(false);
+  const openModal = (element) => {
+    setIsModalOpen(true);
+    setDivModal(element);
+  };
+
+  const closeModal = (Login) => {
+    setConnected(Login);
+    setIsModalOpen(false);
+    setDivModal(<></>);
+  };
+  const customStyles = {
+    overlay: { zIndex: 1000 },
+  };
+  
+  // const firebaseConfig = {
+  //   apiKey: env.apiKey,
+  //   authDomain: env.authDomain,
+  //   projectId: env.projectId,
+  //   storageBucket: env.storageBucket,
+  //   messagingSenderId: env.messagingSenderId,
+  //   appId: env.appId,
+  //   measurementId: env.measurementId
+  // };
+
+  const FirebaseApp = initializeApp(firebaseConfig);
 
   return (
-    <div className="App w-screen h-screen min-h-[700px] flex flex-col  bg-[#EEE8E4] font-mt ">
+    <div className="App w-screen h-screen min-h-[700px] flex flex-col  bg-white font-c ">
       <LanguageProvider>
         <Router>
+          <Navbar />
           <ScrollToTop />
-          {Nav}
           <Modal
             isOpen={isModalOpen}
             onRequestClose={closeModal}
@@ -33,6 +70,10 @@ function App() {
 
           <div className="relative h-full overflow-auto sm:overflow-auto" id={"Scrollref"}>
             <Routes>
+              <Route path={"/"} element={<Home/>}></Route>
+              <Route path={"/Register"} element={<Register />}></Route>
+              <Route path={"/Login"} element={<Login />}></Route>
+              <Route path={"/Forgotpassword"} element={<Forgotpassword />}></Route>
             </Routes>
           </div>
           <ToastContainer

@@ -1,5 +1,5 @@
 {
-  "name": "SoleilSucreFront",
+  "name": "PoSkinFront",
   "version": "2.0.0",
   "homepage": ".",
   "private": true,
@@ -8,7 +8,7 @@
     "@emotion/styled": "^11.11.5",
     "@kurkle/color": "^0.2.1",
     "@mui/icons-material": "^5.8.4",
-    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/lab": "5.0.0-alpha.109",
     "@mui/material": "^5.15.15",
     "@mui/system": "^5.11.2",
     "@react-pdf/renderer": "^3.1.14",
@@ -41,7 +41,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "SET NODE_ENV=development & react-scripts start",
+    "start": "react-dotenv && react-scripts start",
     "build": "SET NODE_ENV=production & react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -72,7 +72,8 @@
       "projectId",
       "storageBucket",
       "messagingSenderId",
-      "appId"
+      "appId",
+      "measurementId"
     ]
   },
   "devDependencies": {
