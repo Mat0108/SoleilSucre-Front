@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  front:
+    container_name: front
+    depends_on:
+      - mongodb
+    #on build le server avec le dockerfile du dossier Front
+    build: 
+     context: production
+     dockerfile: ./Front/dockerfile
+
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - UID=&UID
+      - GUD=&GUD
+    ports:
+      - $REACT_PORT:$REACT_PORT
+    stdin_open: true
+    tty: true
+    cap_drop:
+      - ALL
+    networks:
+      - front
+  vault:
+      image: vault:latest
+      environment:
+        - VAULT_DEV_ROOT_TOKEN_ID=root_token
+      ports:
+        - "8200:8200"
+volumes:
+  db:
+
+networks:
+  front:
+    driver: bridge
