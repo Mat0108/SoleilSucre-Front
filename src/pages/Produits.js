@@ -23,36 +23,30 @@ const Produits = ()=>{
 
     useEffect(()=>{
         async function LoadData() {
-            let produits2 = []
             const db = getFirestore(FirebaseApp);
-            if(Object.keys(params).length){  
+
+            if (Object.keys(params).length) {  
                 const q = query(collection(db, "produits"), where("Categorie", "==", params.CollectionName));
-                onSnapshot(q, (querySnapshot) => {
-                  querySnapshot.forEach((doc) => {
-                    console.log(doc.data())
-                    produits2.push(doc.data());
-                  });
-                });            
-            }else{
-                
-            const docs = await getDocs(collection(db, "produits"))
-            docs.forEach((doc) => {
-                produits2.push(doc.data());
-            });
-            
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+
+                    setProduits(querySnapshot.docs.map(doc => doc.data()));
+                });
+                return () => unsubscribe();
+            } else {
+                const docs = await getDocs(collection(db, "produits"));
+  
+                setProduits(docs.docs.map(doc => doc.data()));
             }
-            
-            
-            setProduits(produits2)
         }
+        console.log(!produits.length)
         if(!produits.length){LoadData()}
-    },[FirebaseApp, params, Object.keys(params).length])
+    },[FirebaseApp, params, produits.length])
     const [showOptions, setShowOptions] = useState(false)
     useEffect(()=>{
         console.log(produits)
     },[produits])
     const Element = useMemo(()=>{
-
+        console.log(produits)
         return <div className={`relative ${Display(affichage)} w-full p-4 gap-4`}>
             <div className="absolute top-2 right-2">
             <div className="w-full h-full rounded-full bg-blue p-2 " onClick={()=>setShowOptions(!showOptions)}>
@@ -74,7 +68,7 @@ const Produits = ()=>{
                 return <Card src={produit.Image1} alt={`produits-${pos}`} title={produit.Title} affichage={affichage} font={"text-[12px]"}/>
             })}
             </div>
-        },[affichage, produits, showOptions,params])
+        },[affichage, produits, showOptions])
     return <div className="relative w-full flex flex-col">
         
         <div className="relative w-full">
