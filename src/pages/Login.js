@@ -1,24 +1,31 @@
 
 import { getApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = (props)=>{
     const [email, setEmail] = useState()
     const [password, setPassword] = useState();
-    const [ setCookies ] = useCookies(["user"]);
+    const [ cookies, setCookies ] = useCookies(["user"]);
       
+    const navigate = useNavigate()
     const FirebaseApp = getApp();
     const auth = getAuth(FirebaseApp);
     function onClick(){
         signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            toast.success("Votre compte a bien été enregistrée !")
-            setCookies(userCredential.user)
+        .then(async (userCredential) => {
+            toast.success("Votre compte a bien été trouvée !")
+            const docRef = doc(getFirestore(FirebaseApp), "users", userCredential.user.uid);
+            const docSnap = await getDoc(docRef);
+            if(docSnap.exists()){
+                setCookies("user", docSnap.data(), { path: "/" });
+                navigate("/")
+            }
         })
         .catch((error) => { 
             console.log(error)

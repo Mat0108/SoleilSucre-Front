@@ -5,6 +5,7 @@ const Colors = {
   "cyan":"#96C9E4",
   "red":"#C95353",
   "green":"#6A9869",
-  "gray":"#a0a0a0"
+  "gray":"#a0a0a0",
+  "blue":"#2f2e55"
 };
 module.exports = Colors;

@@ -57,7 +57,7 @@ const MenuSelector = (props) => {
         <div
           onMouseEnter={onMouseEnterMenu}
           onMouseLeave={onMouseLeaveMenu}
-          className="absolute right-0 w-[80px] rounded-2xl bg-white dark:bg-gray-dark text-gray-normal z-[1000] p-2 drop-shadow-2xl h-fit overflow-auto"
+          className="absolute right-0 w-[100px] mr-2 rounded-2xl bg-white dark:bg-gray-dark text-gray-normal z-[1000] p-2 drop-shadow-2xl h-fit overflow-auto"
           style={{
             fontfamily: "AvenirNextCyr",
             boxshadow: "20px 20px 20px black",

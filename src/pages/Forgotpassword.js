@@ -15,7 +15,7 @@ const Forgotpassword = (props)=>{
     function onClick(){
         sendPasswordResetEmail(auth, email)
         .then((userCredential) => {
-            toast.success("Votre compte a bien été enregistrée !")
+            toast.success("Un email de réinitialisation de votre mot de passe a bien été envoyée !")
             setCookies(userCredential.user)
         })
         .catch((error) => { 
