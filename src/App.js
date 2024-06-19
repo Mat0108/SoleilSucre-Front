@@ -20,6 +20,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Forgotpassword from './pages/Forgotpassword'
 import Account from "./pages/Account";
+import Collections from "./pages/Collections";
+import Produits from "./pages/Produits";
 function App() {
   // const firebaseConfig = {
   //   apiKey: env.apiKey,
@@ -30,11 +32,10 @@ function App() {
   //   appId: env.appId,
   //   measurementId: env.measurementId
   // };
- 
   initializeApp(firebaseConfig);
 
   return (
-    <div className="App w-screen h-screen min-h-[700px] flex flex-col  bg-white font-c ">
+    <div className="App w-screen h-screen min-h-[700px] flex flex-col  bg-dark font-c ">
       <LanguageProvider>
         <Router>
           <Navbar />
@@ -48,6 +49,9 @@ function App() {
               <Route path={"/Logout"} element={<Home/>}></Route>
               <Route path={"/Account"} element={<Account />}></Route>
               <Route path={"/Forgotpassword"} element={<Forgotpassword />}></Route>
+              <Route path={"/Collections"} element={<Collections />}></Route>
+              <Route path={"/Produits/"} element={<Produits />}></Route>
+              <Route path={"/Produits/:CollectionName"} element={<Produits />}></Route>
             </Routes>
           </div>
           <ToastContainer

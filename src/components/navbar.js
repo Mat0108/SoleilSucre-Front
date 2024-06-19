@@ -8,7 +8,6 @@ const Navbar = () =>{
     const [ cookies ] = useCookies(["user"]);
 
     const Menu = useMemo(()=>{
-        console.log(cookies)
         const options = [
             ...(typeof cookies.user === "object" && cookies.user !== null  ? [
                 {to:"/Logout",name:"Logout"},

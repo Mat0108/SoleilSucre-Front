@@ -1,13 +1,14 @@
 import { getApp } from "firebase/app";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useMemo, useState } from "react";
 import Card from "../components/Card";
+import { useParams } from "react-router";
 
-const Collections = ()=>{
+const Produits = ()=>{
     const FirebaseApp = getApp();
     const [affichage, setAffichage] = useState("2x2")
-    const [collections, setCollections] = useState([])
-   
+    const [produits, setProduits] = useState([])
+    const params = useParams()
     
     function Display(affichage){
         if(affichage === "1x1"){
@@ -22,17 +23,34 @@ const Collections = ()=>{
 
     useEffect(()=>{
         async function LoadData() {
-            let collections2 = []
-            const docs = await getDocs(collection(getFirestore(FirebaseApp), "collections"))
+            let produits2 = []
+            const db = getFirestore(FirebaseApp);
+            if(Object.keys(params).length){  
+                const q = query(collection(db, "produits"), where("Categorie", "==", params.CollectionName));
+                onSnapshot(q, (querySnapshot) => {
+                  querySnapshot.forEach((doc) => {
+                    console.log(doc.data())
+                    produits2.push(doc.data());
+                  });
+                });            
+            }else{
+                
+            const docs = await getDocs(collection(db, "produits"))
             docs.forEach((doc) => {
-                collections2.push(doc.data());
+                produits2.push(doc.data());
             });
-            setCollections(collections2)
+            
+            }
+            
+            
+            setProduits(produits2)
         }
-        console.log(!collections.length)
-        if(!collections.length){LoadData()}
-    })
+        if(!produits.length){LoadData()}
+    },[FirebaseApp, params, Object.keys(params).length])
     const [showOptions, setShowOptions] = useState(false)
+    useEffect(()=>{
+        console.log(produits)
+    },[produits])
     const Element = useMemo(()=>{
 
         return <div className={`relative ${Display(affichage)} w-full p-4 gap-4`}>
@@ -52,22 +70,19 @@ const Collections = ()=>{
                     <img src={`/images/grille3x3.png`} alt={"grille"} className="w-4 h-4"/>
                 </div>
             </div> : ""}
-            {collections.map((collection,pos)=>{
-                return <Card src={collection.image} alt={`collection-${pos}`} title={collection.title} affichage={affichage} to={`/Produits/${collection.key}`}/>
-            })}
-            {collections.map((collection,pos)=>{
-                return <Card src={collection.image} alt={`collection-${pos}`} title={collection.title} affichage={affichage} to={`/Produits/${collection.key}`}/>
+            {produits.map((produit,pos)=>{
+                return <Card src={produit.Image1} alt={`produits-${pos}`} title={produit.Title} affichage={affichage} font={"text-[12px]"}/>
             })}
             </div>
-        },[FirebaseApp, affichage,collections,showOptions,affichage])
+        },[affichage, produits, showOptions,params])
     return <div className="relative w-full flex flex-col">
         
         <div className="relative w-full">
             <img src={"/images/home/home.png"} alt={"home"} className="w-full"/>
-            <div className="absolute top-0 left-0 z-10 w-full h-full flex center font-c-bold text-white text-[36px]"> Nos collections </div>
+            <div className="absolute top-0 left-0 z-10 w-full h-full flex center font-c-bold text-white text-[36px]"> Nos Produits </div>
          </div>
         {Element}
     </div>
 }
 
-export default Collections
+export default Produits

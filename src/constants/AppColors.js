@@ -6,6 +6,7 @@ const Colors = {
   "red":"#C95353",
   "green":"#6A9869",
   "gray":"#a0a0a0",
-  "blue":"#2f2e55"
+  "blue":"#2f2e55",
+  "dark":"#3b3b45"
 };
 module.exports = Colors;

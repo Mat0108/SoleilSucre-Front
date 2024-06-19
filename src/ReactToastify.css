@@ -44,7 +44,7 @@
   width: 100% !important;
 }
 .Toastify__close-button {
-  color: #fff !important;
+  color: #fff !;
   background: transparent;
   outline: none;
   border: none;

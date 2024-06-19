@@ -36,7 +36,7 @@ const MenuSelector = (props) => {
         onClick={handleClick}
         onMouseEnter={onMouseEnterButton}
         onMouseLeave={onMouseLeaveButton}
-        className={`flex flex-row mt-[25px] mr-[10px] p-2 ${showOptions ? "bg-belge  text-white cursor-pointer":""} ${cmhover}`}
+        className={`flex flex-row mt-[25px] mr-[10px] p-2 ${showOptions ? "bg-blue  text-white cursor-pointer":""} ${cmhover}`}
         id="menu-button"
         aria-expanded="true"
         aria-haspopup="true"
@@ -57,7 +57,7 @@ const MenuSelector = (props) => {
         <div
           onMouseEnter={onMouseEnterMenu}
           onMouseLeave={onMouseLeaveMenu}
-          className="absolute right-0 w-[100px] mr-2 rounded-2xl bg-white dark:bg-gray-dark text-gray-normal z-[1000] p-2 drop-shadow-2xl h-fit overflow-auto"
+          className="absolute right-0 w-[100px] mr-2 rounded-2xl bg-blue text-white text-[18px] z-[1000] p-2 drop-shadow-2xl h-fit overflow-auto"
           style={{
             fontfamily: "AvenirNextCyr",
             boxshadow: "20px 20px 20px black",

@@ -14,7 +14,7 @@ const Register = (props)=>{
     const [password2, setPassword2] = useState();
     const [firstname, setFirstname] = useState();
     const [lastname,setLastname] = useState();
-    const [ setCookies ] = useCookies(["user"]);
+    const [cookies, setCookies ] = useCookies(["user"]);
       
     const navigate = useNavigate()
     const FirebaseApp = getApp();
@@ -28,8 +28,8 @@ const Register = (props)=>{
                     firstname: firstname,
                     lastname: lastname,
                     email: email,
-                }).then(user => {
-                    
+                }).then((userCredential)=> {
+                    console.log(userCredential)
                     toast.success("Votre compte a bien été enregistrée !")
                     setCookies({email,firstname,lastname})
                     navigate("/")
