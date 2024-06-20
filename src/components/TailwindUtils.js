@@ -359,11 +359,11 @@ export function getTextColor(colorName) {
     case "vivid_tangerine":
       return "text-vivid_tangerine";
     case "white_coffee":
-      return "text-white_coffee";
+      return "text-black_coffee";
     case "white":
-      return "text-white";
+      return "text-black";
     case "white2":
-      return "text-white2";
+      return "text-black2";
     case "green":
       return "text-green";
     case "red":

@@ -22,6 +22,7 @@ import Forgotpassword from './pages/Forgotpassword'
 import Account from "./pages/Account";
 import Collections from "./pages/Collections";
 import Produits from "./pages/Produits";
+import Produit from "./pages/Produit";
 function App() {
   // const firebaseConfig = {
   //   apiKey: env.apiKey,
@@ -32,10 +33,11 @@ function App() {
   //   appId: env.appId,
   //   measurementId: env.measurementId
   // };
+
   initializeApp(firebaseConfig);
 
   return (
-    <div className="App w-screen h-screen min-h-[700px] flex flex-col  bg-dark font-c ">
+    <div className="App w-screen h-screen min-h-[700px] flex flex-col  bg-fond font-c ">
       <LanguageProvider>
         <Router>
           <Navbar />
@@ -52,6 +54,7 @@ function App() {
               <Route path={"/Collections"} element={<Collections />}></Route>
               <Route path={"/Produits/"} element={<Produits />}></Route>
               <Route path={"/Produits/:CollectionName"} element={<Produits />}></Route>
+              <Route path={"/Produit/:ProduitId"} element={<Produit/>}></Route>
             </Routes>
           </div>
           <ToastContainer
@@ -79,7 +82,7 @@ function App() {
               )
             }
             position="bottom-center"
-            autoClose={1000}
+            autoClose={2000}
             hideProgressBar={false}
             limit={1}
             newestOnTop={false}

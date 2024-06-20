@@ -52,8 +52,8 @@ const LanguageSelector = () => {
         onMouseLeave={onMouseLeaveButton}
         className={`flex rounded-xl w-[100px] px-4 py-2 text-[8px] sm:text-[16px] font-medium ${
           showOptions
-            ? "bg-blue dark:bg-green text-white"
-            : "text-dark-blue dark:text-white"
+            ? "bg-blue dark:bg-green text-black"
+            : "text-dark-blue dark:text-black"
         }`}
         id="menu-button"
         aria-expanded="true"
@@ -98,7 +98,7 @@ const LanguageSelector = () => {
               return (
                 <div
                   key={key}
-                  className={`cursor-pointer inline text-md font-semibold hover:bg-hover-menu hover:text-white ${
+                  className={`cursor-pointer inline text-md font-semibold hover:bg-hover-menu hover:text-black ${
                     id === userLanguage ? "bg-dark-blue" : ""
                   } flex rounded-2xl`}
                   onClick={() => changeLanguage(id)}
@@ -116,7 +116,7 @@ const LanguageSelector = () => {
 
                   <p
                     className={`self-center absolute title-header ml-10 ${
-                      id === userLanguage ? "text-white" : ""
+                      id === userLanguage ? "text-black" : ""
                     }`}
                   >
                     {name}
