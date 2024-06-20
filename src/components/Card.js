@@ -14,7 +14,7 @@ const Card = (props) => {
     }
     let Card = useMemo(()=>{
         let display = Display()
-        return <Link className={`flex flex-col`} to={props.to}>
+        return <Link className={`flex flex-col ${props.font}`} to={props.to}>
             <div className={`${getW(Math.round(display-1/display)*100)}`}>
                 <img src={props.src} alt={props.alt} className="w-full border-t-4 border-l-4 border-r-4 border-belge rounded-t-xl "/>
             </div>

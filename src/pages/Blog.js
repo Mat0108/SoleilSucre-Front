@@ -1,7 +1,6 @@
 import { getApp } from "firebase/app";import { useEffect, useMemo, useState } from 'react';
 import {Link, useParams } from 'react-router-dom';
 import Carousel2 from '../components/Layout/Carousel2';
-import { getBlogbyField, getBlogs } from '../services/Blog';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 const Blog = () =>{
@@ -20,12 +19,15 @@ const Blog = () =>{
     useEffect(() => {
         const fetchData = async() => {
             const db = getFirestore(FirebaseApp);
-            const userDocRef = doc(db, "users", 'RqHH4C9mpFTCcd3HVOFF');
+            const userDocRef = doc(db, "blogs", 'RqHH4C9mpFTCcd3HVOFF');
             const docUser = await getDoc(userDocRef);
-            setListItem(docUser);
-        };
-        fetchData();
-    }, [params])
+            if(docUser.exists()){
+                console.log(docUser.data());
+                setListItem(docUser.data());
+            }
+            };
+        if(!Object.keys(listItem.titre).length){fetchData()}
+    }, [])
     
     //Layout list : IF -> fullimage, IFT -> fullimage avec un titre, IFD -> image avec du text en dessous, IFTD combine IFT && IFD , TF -> fulltext, TL -> layout avec text à gauche et image à droite, TR -> layout avec image à gauche et text à droite
     function itemCarousel(image,altimage,title,text,url){
@@ -48,16 +50,16 @@ const Blog = () =>{
     function returnTextWithImage(titre,text,image,altimage,pos){
         if(pos === false){
             return <div className={`w-[90%] sm:w-[86%] h-fit ${margin}`}>
-                {!!titre &&<div className={`w-full h-fit ${margin}`}><h1 className='text-left text-[20px] sm:text-[50px] text-blue font-mt-extra-bold'>{titre}</h1></div>}
+                {!!titre &&<div className={`w-full h-fit ${margin}`}><h1 className='text-left text-[20px]  text-blue font-mt-extra-bold'>{titre}</h1></div>}
                 {(!!image || !!text) && <div className={`flex center w-full h-fit gap-2 sm:gap-8`}>
                     {!!image && <div className={`${text ? "w-1/3" : "w-full"} h-fit flex center`}><img src={image} alt={altimage} className='w-fit h-full'></img></div>}
                     {!!text && <div className={`${image ? "w-2/3" : "w-full"} h-fit flex `}><div className='text-[8px] sm:text-[22px] text-justify'>{text}</div></div>}
                 </div>}</div>
         }else{
             return <div className={`w-[90%] sm:w-[86%] h-fit ${margin}`}>
-                {!!titre &&<div className={`w-full h-fit ${margin}`}><h1 className='text-left text-[12px] sm:text-[50px] text-blue font-mt-extra-bold'>{titre}</h1></div>}
+                {!!titre &&<div className={`w-full h-fit ${margin}`}><h1 className='text-left text-[20px]  text-blue font-mt-extra-bold'>{titre}</h1></div>}
                 {(!!image ||!!text ) && <div className={`flex center w-full h-fit gap-2 sm:gap-8`}>
-                {!!text && <div className={`${image ? "w-2/3" : "w-full"} h-fit flex`}><div className='text-[8px] sm:text-[20px] text-justify'>{text}</div></div>}
+                {!!text && <div className={`${image ? "w-2/3" : "w-full"} h-fit flex`}><div className='text-[14px] sm:text-[20px] text-justify'>{text}</div></div>}
                 {!!image && <div className={`${text ? "w-1/3" : "w-full"} h-fit flex center`}><img src={image} alt={altimage} className='w-fit h-full'></img></div>}
             </div>}
             </div>
@@ -127,8 +129,7 @@ const Blog = () =>{
         if(!!Object.keys(listItem.layout).length){
             for(let i = 0;i< Object.keys(listItem.layout).length;i++){
                 
-                list.push(switchLayout(listItem.layout[i],listItem.titlelist[i],listItem.textlist[i],listItem.imagelist[i],listItem.altimage[i],listItem.textcolor[i]))
-            
+                list.push(switchLayout(listItem.layout[i],listItem.titre[i],listItem.text[i]))
             }
         }
         return list;
@@ -143,7 +144,7 @@ const Blog = () =>{
         if(Object.keys(listItems).length){
             listItems.map((blog,pos)=>{
                 
-                list2.push(itemCarousel(blog.imagepresentation,blog.altimagepresentation,blog.title,blog.textpresentation,`/Blog/${blog.altimagepresentation}`))
+                list2.push(itemCarousel(blog.image,blog.alt,blog.title,blog.text,`/Blog/${blog.altimagepresentation}`))
                 if(blog.altimagepresentation === params.BlogId){
                     start = pos
                 }
@@ -155,10 +156,10 @@ const Blog = () =>{
 
     return (<div className='w-full h-full flex center flex-col'>
         {items}
-        <div className="relative w-full h-0.5 mt-[30px] bg-[#10264C4D]"></div>
+        {/* <div className="relative w-full h-0.5 mt-[30px] bg-[#10264C4D]"></div>
         <div><h1 className="mt-[12px] sm:mt-[30px] text-[12px] sm:text-[50px] font-mt-extra-bold text-blue ">Articles connexes :</h1></div>
         {BlogCarousel}
-        <div className="relative w-full h-0.5 mt-[30px] bg-[#10264C4D]"></div>
+        <div className="relative w-full h-0.5 mt-[30px] bg-[#10264C4D]"></div> */}
         
     </div>)
     

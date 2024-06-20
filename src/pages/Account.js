@@ -5,12 +5,14 @@ import {  doc, getDoc, getFirestore, updateDoc} from "firebase/firestore";
 import { useEffect, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
+import Card from "../components/Card";
 
 const Account = (props)=>{
     const [email, setEmail] = useState()
     const [firstname, setFirstname] = useState();
     const [lastname,setLastname] = useState();
     const [ cookies, setCookies ] = useCookies(["user"]);
+    const [favori, setFavori] = useState();
       
     const [loadData, setLoadData] = useState(0)
     const FirebaseApp = getApp();
@@ -34,6 +36,8 @@ const Account = (props)=>{
                 setEmail(userData?.email ?? '')
                 setFirstname(userData?.firstname ?? '')
                 setLastname(userData?.lastname ?? '')
+                setFavori(userData?.favori)
+                console.log(userData)
                 setCookies("user", userData, { path: "/" });
             
             }
@@ -46,7 +50,7 @@ const Account = (props)=>{
     return <div className="w-full flex flex-col center ">
     <div className="relative w-full">
         <img src={"/images/home/home.png"} alt={"home"} className="w-full"/>
-        <div className="absolute top-0 left-0 z-10 w-full h-full flex center font-c-bold text-black text-[36px]"> Votre compte </div>
+        <div className="absolute top-0 left-0 z-10 w-full h-full flex center font-c-bold text-white text-[36px]"> Votre compte </div>
     </div>
     <div className="w-[80%] flex flex-col center gap-4 mt-4"> 
         <div className="w-full flex flex-col">
@@ -63,6 +67,13 @@ const Account = (props)=>{
         </div>
        
         <div className="font-c-bold bg-belge p-2 rounded-lg" onClick={()=>onClick()}>Modifier les informations</div>
+        <div className="mt-4 font-c-bold text-[16px]"> Vos favoris</div>
+        <div className="grid grid-cols-3 gap-4 pb-4">
+            {favori && favori.map((produit,pos)=>
+                    <Card src={produit.Image1} alt={`produits-${pos}`} title={produit.Title} prix={produit.Prix} affichage={"3x3"} fontTitle={"text-[12px]"} fontPrix={"text-[18px] font-c-bold"} to={`/Produit/${produit.id}`} />
+            )}
+        </div>
+
     </div></div>
 
 }

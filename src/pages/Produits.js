@@ -118,7 +118,7 @@ const Produits = ()=>{
         
         <div className="relative w-full">
             <img src={"/images/home/home.png"} alt={"home"} className="w-full"/>
-            <div className="absolute top-0 left-0 z-10 w-full h-full flex center font-c-bold text-black text-[36px]"> Nos Produits </div>
+            <div className="absolute top-0 left-0 z-10 w-full h-full flex center font-c-bold text-white text-[36px]"> Nos Produits </div>
          </div>
         {Element}
     </div>

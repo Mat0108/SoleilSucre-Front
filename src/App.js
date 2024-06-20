@@ -23,6 +23,8 @@ import Account from "./pages/Account";
 import Collections from "./pages/Collections";
 import Produits from "./pages/Produits";
 import Produit from "./pages/Produit";
+import Blog from './pages/Blog';
+import Panier from "./pages/Panier";
 function App() {
   // const firebaseConfig = {
   //   apiKey: env.apiKey,
@@ -33,7 +35,6 @@ function App() {
   //   appId: env.appId,
   //   measurementId: env.measurementId
   // };
-
   initializeApp(firebaseConfig);
 
   return (
@@ -41,7 +42,6 @@ function App() {
       <LanguageProvider>
         <Router>
           <Navbar />
-          <ScrollToTop />
 
           <div className="relative h-full overflow-auto sm:overflow-auto" id={"Scrollref"}>
             <Routes>
@@ -55,6 +55,8 @@ function App() {
               <Route path={"/Produits/"} element={<Produits />}></Route>
               <Route path={"/Produits/:CollectionName"} element={<Produits />}></Route>
               <Route path={"/Produit/:ProduitId"} element={<Produit/>}></Route>
+              <Route path={"/Blog"} element={<Blog/>}></Route>
+              <Route path={"/Panier"} element={<Panier />}></Route>
             </Routes>
           </div>
           <ToastContainer

@@ -12,7 +12,7 @@ const Produit = () => {
     const FirebaseApp = getApp();
     const [produit, setProduit] = useState({});
     const [produits, setProduits] = useState([]);
-    const [showOptions,setShowOptions] = useState(true)
+    const [showOptions,setShowOptions] = useState(false)
     const [taille,setTaille] = useState()
     const [color,setColor] = useState()
     const [nb, setNB] = useState(1)
@@ -36,9 +36,8 @@ const Produit = () => {
                 const userDocRef = doc(db, "users", auth.currentUser.uid);
                 const docUser = await getDoc(userDocRef);
             
-                const produitIndex = (docUser.data().favori || []).indexOf(produit);
-                console.log(produitIndex)
-                setFavori(produitIndex !== -1)
+                const produitIndex = (docUser.data().favori || []).filter(item => params.ProduitId === item.id)
+                setFavori(Object.keys(produitIndex).length !== 0)
             }
             if (docSnap.exists()) {
                 setProduit({ id: docSnap.id, ...docSnap.data()});
@@ -63,8 +62,8 @@ const Produit = () => {
             });
            }
         }
-        if(!Object.keys(produit).length){LoadData()}
-    },[FirebaseApp, params, produit,produits,db,auth])
+        if(!Object.keys(produit).length || params.ProduitId !== produit.id){LoadData()}
+    },[FirebaseApp, params, params.ProduitId, produit,produits,db,auth])
     
 
     function Button(text,set,selected){
@@ -87,12 +86,11 @@ const Produit = () => {
         
                 let favoriList = userDoc.data().favori || [];
                 
-                const produitIndex = favoriList.filter(item => produit.id !== item.id);
+                const IsFavori = favoriList.filter(item => produit.id === item.id);
                 
-                console.log(produitIndex,favoriList)
-        
-                if (Object.keys(produitIndex).length !== 0) {
-                    favoriList.splice(produitIndex, 1);
+                
+                if (Object.keys(IsFavori).length !== 0) {
+                    favoriList = favoriList.filter(item => produit.id !== item.id);
                 } else {
                     favoriList.push(produit);
                 }
@@ -103,14 +101,19 @@ const Produit = () => {
             }
         };
         function AddPanier(){
+            const user = auth.currentUser;
+            if (!user) {toast.info("merci de se connecter pour ajouter au panier");navigate("/Login");return;}
             const actualPanier = cookies.panier || [];
             const index = actualPanier.findIndex(item => item.produit.id === produit.id);
+            console.log(index)
             if (index !== -1) {
                 actualPanier[index].nb += nb;
             } else {
-                actualPanier.push({ produit, nb });
+                actualPanier.push({ produit, nb,color,taille });
             }
-            setCookies("panier", actualPanier, { path: "/" });        
+            setCookies("panier", actualPanier, { path: "/" }); 
+            toast.success("Le produit a bien été ajoutée au panier")  
+            setShowOptions(false)     
         }
         return <div className="w-full h-full relative">
         <div className="absolute top-2 left-2 p-2 bg-red rounded-full" onClick={()=>{updateFavoriList()}}><img src={favori ? "/images/savefill.png":"/images/save.png"} alt={"save"} className="w-4 h-4"/></div>

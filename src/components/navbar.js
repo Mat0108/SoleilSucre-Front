@@ -11,7 +11,8 @@ const Navbar = () =>{
         const options = [
             ...(typeof cookies.user === "object" && cookies.user !== null  ? [
                 {to:"/Logout",name:"Logout"},
-                {to:"/Account",name:"Votre compte"}
+                {to:"/Account",name:"Votre compte"},
+                {to:"/Panier",name:"Votre panier"}
             ]:[
                 {to:"/login",name:"Login"},
                 {to:"/register",name:"Register"},]),
