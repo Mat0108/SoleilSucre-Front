@@ -16,7 +16,8 @@ const Navbar = () =>{
                 {to:"/login",name:"Login"},
                 {to:"/register",name:"Register"},]),
             {to:"/Collections",name:"Collection"},
-            {to:"/Produits",name:"Produits"}
+            {to:"/Produits",name:"Produits"}, 
+            {to:"/Blog",name:"Blog"}
         ]
         return <div className="absolute right-0 top-0"><MenuSelector icon={<img src={"images/menu.png"} alt={"menu"} className={"w-4 h-4"}/>} options={options}/></div>
     
